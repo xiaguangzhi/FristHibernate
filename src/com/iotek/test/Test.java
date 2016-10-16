@@ -5,11 +5,6 @@
  *
  */
 package com.iotek.test;
-
-import java.math.BigDecimal;
-import java.sql.Timestamp;
-import java.util.Date;
-import java.util.HashSet;
 import java.util.List;
 
 import com.iotek.dao.AddressDao;
@@ -20,14 +15,9 @@ import com.iotek.dao.impl.AddressDaoImpl;
 import com.iotek.dao.impl.OrdersDaoImpl;
 import com.iotek.dao.impl.ProductDaoImpl;
 import com.iotek.dao.impl.UserDaoImpl;
-import com.iotek.entity.OrderItem;
 import com.iotek.entity.Orders;
 import com.iotek.entity.Product;
-import com.iotek.entity.ProductDetail;
 import com.iotek.entity.User;
-import com.iotek.entity.UserDetail;
-
-
 public class Test {
 	public static void main(String[] args) {
 		ProductDao productDao = new ProductDaoImpl();
@@ -81,11 +71,11 @@ public class Test {
 		
 		
 		//用户查看商品
-	/*	 List<Product> listProduct = productDao.listProduct();
+		 List<Product> listProduct = productDao.listProduct();
 		System.out.println(listProduct.size());
 		for (Product product : listProduct) {
 			System.out.println(product);
-		}*/
+		}
 		
 /*		//用户购买商品
 		Product product = productDao.getProduct(1);
