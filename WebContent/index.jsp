@@ -7,6 +7,7 @@
 <title></title>
 </head>
 <body>
+<a href="show_product.do?nowPage=1">管理商品</a>
 
 </body>
 </html>

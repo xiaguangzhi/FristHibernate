@@ -49,38 +49,46 @@ public class AddProductServlet extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");
 		response.setCharacterEncoding("UTF-8");
 		response.setContentType("text/html;charset=UTF-8");
-		/*String productName = request.getParameter("name");
+		String productName = request.getParameter("name");
 		String productType = request.getParameter("type");
-		System.out.println(productType);
 		String productPrice= request.getParameter("price");
 		String caption = request.getParameter("caption");
+		
+		//每一个文件对应都会生成一个part   如果多个文件通过request.getParts()返回出来一个part容器
 		Collection<Part> parts = request.getParts();
+		//保存图片路径
 		Map<String, String> imageNames=new HashMap<String, String>();
 		
 		if (parts != null) {
 			String realPath = request.getServletContext().getRealPath("/");
+			System.out.println("程序应用实例的根目录："+realPath);
+			
 			for (Part part : parts) {
 				if (part != null) {
+					//part对应的名字是表单元素的名字
 					String name = part.getName();
-					System.out.println("name:"+name);
+					//过滤出通过名字以image的开头的part
 					if (name.startsWith("image")) {
+						//得到文件名
 						String fileName = getFileName(part);
 						System.out.println("fileName:"+fileName);
+						//保存文件
 						saveFile(part, fileName, realPath);
-						imageNames.put(name, "images/"+fileName);
-					}else {
-						System.out.println(part+"1kong");
+						imageNames.put(name, "/images/"+fileName);
 					}
 				}else {
-					System.out.println(parts+"2kong");
+					System.out.println("part为空");
 				}
 
 			}
 
 		}
+		//从map里取出名字对应的图片保存相对位置
 		String  image1=imageNames.get("image1");
 		String  image2=imageNames.get("image2");
 		String  image3=imageNames.get("image3");
+		
+		
 		Product product=new Product();
 		product.setProductName(productName);
 		product.setProductType(productType);
@@ -93,14 +101,11 @@ public class AddProductServlet extends HttpServlet {
 		product.setProductDetail(productDetail);
 		
 		
-		
-		boolean saveProduct = productBiz.saveProduct(product);
-		*/
 		ProductBiz productBiz=new ProductBizImpl();
+		boolean saveProduct = productBiz.saveProduct(product);
+		
+	
 		List<Product> listProduct = productBiz.listProduct();
-		for (Product product : listProduct) {
-			System.out.println(product);
-		}
 		HttpSession session = request.getSession();
 		session.setAttribute("listProduct", listProduct);
 		request.getRequestDispatcher("pages/show.jsp").forward(request, response);
@@ -118,7 +123,7 @@ public class AddProductServlet extends HttpServlet {
 	private void saveFile(Part part, String fileName, String realPath)
 			throws IOException {
 		InputStream is = null;
-		OutputStream os = new FileOutputStream(realPath +"images/"+ fileName);
+		OutputStream os = new FileOutputStream(realPath +"/images/"+ fileName);
 		;
 		try {
 			is = part.getInputStream();
@@ -129,7 +134,7 @@ public class AddProductServlet extends HttpServlet {
 			}
 			os.flush();
 		} catch (Exception e) {
-			// TODO: handle exception
+			
 		} finally {
 			is.close();
 			os.close();
@@ -138,8 +143,9 @@ public class AddProductServlet extends HttpServlet {
 	}
 
 	private String getFileName(Part part) {
+		//通过part的头文件取出来header  header的信息里包含了上传文件的信息
 		String header = part.getHeader("Content-Disposition");
-		System.out.println(header);
+		System.out.println("header:"+header);
 		// 火狐浏览器
 		String filename = header.substring(header.indexOf("filename=\"") + 10,
 				header.lastIndexOf("\""));

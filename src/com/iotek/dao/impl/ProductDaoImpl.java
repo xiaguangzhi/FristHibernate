@@ -93,6 +93,7 @@ public class ProductDaoImpl implements ProductDao{
 			Criteria criteria = session.createCriteria(Product.class);
 			criteria.setFirstResult(0);
 			criteria.setMaxResults(10);
+//			select *from product limit 0, 20;
 			list = criteria.list();
 			transaction.commit();
 		} catch (Exception e) {
