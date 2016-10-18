@@ -5,6 +5,8 @@
  *
  */
 package com.iotek.test;
+import java.sql.Timestamp;
+import java.util.Date;
 import java.util.List;
 
 import com.iotek.dao.AddressDao;
@@ -20,11 +22,11 @@ import com.iotek.entity.Product;
 import com.iotek.entity.User;
 public class Test {
 	public static void main(String[] args) {
-		ProductDao productDao = new ProductDaoImpl();
+		/*ProductDao productDao = new ProductDaoImpl();
 		OrdersDao ordersDao = new OrdersDaoImpl();
 		UserDao userDao=new UserDaoImpl();
 		AddressDao addressDao=new AddressDaoImpl();
-	/*	//注册用户
+		//注册用户
 		
 		 //当用户信息发送到服务器，创建用户对象
 		User user=new User();
@@ -37,7 +39,7 @@ public class Test {
 		userDetail.setEmail("1484073720@qq.com");
 		user.setUserDetail(userDetail);
 		userDao.saveUser(user);
-		*/
+		
 		
 		
 		
@@ -45,18 +47,18 @@ public class Test {
 		User user = userDao.getUser("xiao huang", "123456");
 		System.out.println(user);
 		
-		/*//用户修改密码
+		//用户修改密码
 		user.setPassword("1234567");
-		userDao.updateUser(user);*/
+		userDao.updateUser(user);
 		
-	/*	//用户增加余额
+		//用户增加余额
 		UserDetail userDetail = user.getUserDetail();
 		userDetail.setMoney(String.valueOf(Double.parseDouble(userDetail.getMoney())+1000));
-		userDao.updateUserDeatil(userDetail);*/
+		userDao.updateUserDeatil(userDetail);
 		
 		//管理员增加商品
 		//提交后在服务端创建product对象
-	/*	Product product=new Product();
+		Product product=new Product();
 		product.setProductName("矿泉水");
 		product.setProductPrice(new BigDecimal(12345));
 		product.setProductType("饮用水");
@@ -67,7 +69,7 @@ public class Test {
 		productDetail.setImage3("假装有照片3");
 		productDetail.setCaption("这个商品好水啊");
 		product.setProductDetail(productDetail);
-		productDao.saveProduct(product);*/
+		productDao.saveProduct(product);
 		
 		
 		//用户查看商品
@@ -77,7 +79,7 @@ public class Test {
 			System.out.println(product);
 		}
 		
-/*		//用户购买商品
+		//用户购买商品
 		Product product = productDao.getProduct(1);
 		OrderItem item=new OrderItem();
 		item.setProduct(product);
@@ -91,7 +93,7 @@ public class Test {
 		orders.setOrdersState(0);
 		orders.setTotalMoney(new BigDecimal(12345));
 		orders.setUser(user);
-		ordersDao.saveOrders(orders);*/
+		ordersDao.saveOrders(orders);
 		
 		//用户查询订单
 		List<Orders> listOrders = ordersDao.listOrders(user);
@@ -104,8 +106,9 @@ public class Test {
 		//用户取消订单
 		Orders orders=listOrders.get(0);
 		ordersDao.deleteOrders(orders);
-		
-		
+		*/
+		Timestamp timestamp=new Timestamp(new Date().getTime());
+		System.out.println(timestamp.toString());
 	
 
 	}

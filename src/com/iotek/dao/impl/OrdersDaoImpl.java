@@ -68,7 +68,7 @@ public class OrdersDaoImpl implements OrdersDao{
 		Transaction transaction = null;
 		try {
 			transaction = session.beginTransaction();
-			session.delete(orders);
+			session.update(orders);
 			transaction.commit();
 			return true;
 		} catch (Exception e) {

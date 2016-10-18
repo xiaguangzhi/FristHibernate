@@ -1,6 +1,7 @@
 package com.iotek.control;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -9,21 +10,21 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.iotek.biz.UserBiz;
-import com.iotek.biz.impl.UserBizImpl;
-import com.iotek.entity.User;
+import com.iotek.biz.ProductBiz;
+import com.iotek.biz.impl.ProductBizImpl;
+import com.iotek.entity.Product;
 
 /**
- * Servlet implementation class LoginServlet
+ * Servlet implementation class IndexServlet
  */
-@WebServlet("/login.do")
-public class LoginServlet extends HttpServlet {
+@WebServlet("/index.do")
+public class IndexServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public LoginServlet() {
+    public IndexServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -35,28 +36,12 @@ public class LoginServlet extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");
 		response.setCharacterEncoding("UTF-8");
 		response.setContentType("text/html;charset=UTF-8");
-		UserBiz userBiz=new UserBizImpl();
-		String name = request.getParameter("name");
-		String password = request.getParameter("password");
-		User user=new User();
-		user.setName(name);
-		user.setPassword(password);
-		boolean loginUser = userBiz.LoginUser(user);
+		ProductBiz productBiz=new ProductBizImpl();
+		List<Product> listProduct = productBiz.listProduct();
+		HttpSession session = request.getSession();
+		session.setAttribute("listProduct", listProduct);
+		request.getRequestDispatcher("index.jsp").forward(request, response);
 		
-		if (loginUser) {
-			user = userBiz.getUser(user);
-			HttpSession session = request.getSession();
-			session.setAttribute("user",user );
-			String proIdString = (String)session.getAttribute("buyproductSate");
-			if (proIdString!=null) {
-				//生成订单详情
-				request.getRequestDispatcher("pages/order_detail.jsp").forward(request, response);
-			}else {
-				//跳转到主页面
-				request.getRequestDispatcher("index.jsp").forward(request, response);
-			}
-		}
-	
 	}
 
 	/**

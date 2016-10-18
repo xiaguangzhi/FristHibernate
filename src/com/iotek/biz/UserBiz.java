@@ -7,10 +7,12 @@
 package com.iotek.biz;
 
 import com.iotek.entity.User;
+import com.iotek.entity.UserDetail;
 
 public  interface UserBiz {
 	public boolean LoginUser(User user);
 	public User getUser(User user);
+	public boolean UpdateUserDetail(UserDetail  userDetail);
 	
 
 }

@@ -10,6 +10,7 @@ import com.iotek.biz.UserBiz;
 import com.iotek.dao.UserDao;
 import com.iotek.dao.impl.UserDaoImpl;
 import com.iotek.entity.User;
+import com.iotek.entity.UserDetail;
 
 public class UserBizImpl implements UserBiz{
 	private UserDao userDao;
@@ -30,6 +31,12 @@ public class UserBizImpl implements UserBiz{
 	public User getUser(User user) {
 		
 		return userDao.getUser(user.getName(),user.getPassword());
+	}
+
+	@Override
+	public boolean UpdateUserDetail(UserDetail  userDetail) {
+		
+		return userDao.updateUserDeatil(userDetail);
 	}
 
 }

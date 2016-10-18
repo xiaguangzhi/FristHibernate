@@ -1,6 +1,7 @@
 package com.iotek.control;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -9,21 +10,19 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.iotek.biz.UserBiz;
-import com.iotek.biz.impl.UserBizImpl;
-import com.iotek.entity.User;
+import com.iotek.entity.Product;
 
 /**
- * Servlet implementation class LoginServlet
+ * Servlet implementation class ShowProductDetail
  */
-@WebServlet("/login.do")
-public class LoginServlet extends HttpServlet {
+@WebServlet("/show_product_detail.do")
+public class ShowProductDetail extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public LoginServlet() {
+    public ShowProductDetail() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -35,28 +34,23 @@ public class LoginServlet extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");
 		response.setCharacterEncoding("UTF-8");
 		response.setContentType("text/html;charset=UTF-8");
-		UserBiz userBiz=new UserBizImpl();
-		String name = request.getParameter("name");
-		String password = request.getParameter("password");
-		User user=new User();
-		user.setName(name);
-		user.setPassword(password);
-		boolean loginUser = userBiz.LoginUser(user);
-		
-		if (loginUser) {
-			user = userBiz.getUser(user);
-			HttpSession session = request.getSession();
-			session.setAttribute("user",user );
-			String proIdString = (String)session.getAttribute("buyproductSate");
-			if (proIdString!=null) {
-				//生成订单详情
-				request.getRequestDispatcher("pages/order_detail.jsp").forward(request, response);
-			}else {
-				//跳转到主页面
-				request.getRequestDispatcher("index.jsp").forward(request, response);
+		String productIdString= request.getParameter("productid");
+		int productId = Integer.parseInt(productIdString);
+		HttpSession session = request.getSession();
+		List<Product> listProuct =(List)session.getAttribute("listProduct");
+		for (Product product : listProuct) {
+			if (product.getId()==productId) {
+				session.setAttribute("productitem", product);
 			}
 		}
-	
+		/*如果将数据放在requst里传值 只能被取出来一次
+		 *如果将数据放在session里生命周期更长，只要浏览器不关闭
+		 *都可以将该对象取出来使用
+		 * 
+		 * 
+		 * 
+		 * */
+		request.getRequestDispatcher("pages/show_product_item.jsp").forward(request, response);
 	}
 
 	/**
@@ -64,6 +58,8 @@ public class LoginServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		this.doGet(request, response);
+		
+		
 	}
 
 }

@@ -1,10 +1,8 @@
-#show_table{
-	text-align: center;
-	width: 100%;
+#show_top_left{
+	float: left;
 }
-.image{
-	height: 200px;
-	width: 200px;
+#show_top_right{
+	float: right;
 }
 td{
 	font-weight: 500;
@@ -16,9 +14,43 @@ caption{
 	color: blue;
 	margin-bottom: 30px;
 }
-#show_top_left{
+.logo{
+	text-align: center;
+	margin-top:30px;
+}
+#logo_image{
+	height: 80px;
+	width:80px;
+	border-radius:10px 10px 10px 10px;
+	margin-left: 100px;
 	float: left;
+	
 }
-#show_top_right{
-	float: right;
+#input{
+	margin-left: 100px;
+	float: left;
+	text-align: center;
 }
+#input_text{
+	
+	height: 50px;
+	width: 500px;
+	text-align: center;/* 居中元素里面的内容 */
+	border-width:2px;
+	font-size: 30px;
+	font-weight: 500px;
+	
+}
+
+#input_button{
+	height: 50px;
+	width: 100px;
+	margin-left: 20px;
+	margin-bottom: 5px;
+	border-radius:10px 10px 10px 10px;
+}
+
+
+
+
+

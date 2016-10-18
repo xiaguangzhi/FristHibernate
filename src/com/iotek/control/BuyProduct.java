@@ -9,23 +9,21 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.iotek.biz.UserBiz;
-import com.iotek.biz.impl.UserBizImpl;
 import com.iotek.entity.User;
 
 /**
- * Servlet implementation class LoginServlet
+ * Servlet implementation class addProduct
  */
-@WebServlet("/login.do")
-public class LoginServlet extends HttpServlet {
+@WebServlet("/buy_product.do")
+public class BuyProduct extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public LoginServlet() {
+    public BuyProduct() {
         super();
-        // TODO Auto-generated constructor stub
+      
     }
 
 	/**
@@ -35,28 +33,20 @@ public class LoginServlet extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");
 		response.setCharacterEncoding("UTF-8");
 		response.setContentType("text/html;charset=UTF-8");
-		UserBiz userBiz=new UserBizImpl();
-		String name = request.getParameter("name");
-		String password = request.getParameter("password");
-		User user=new User();
-		user.setName(name);
-		user.setPassword(password);
-		boolean loginUser = userBiz.LoginUser(user);
-		
-		if (loginUser) {
-			user = userBiz.getUser(user);
-			HttpSession session = request.getSession();
-			session.setAttribute("user",user );
-			String proIdString = (String)session.getAttribute("buyproductSate");
-			if (proIdString!=null) {
-				//生成订单详情
-				request.getRequestDispatcher("pages/order_detail.jsp").forward(request, response);
-			}else {
-				//跳转到主页面
-				request.getRequestDispatcher("index.jsp").forward(request, response);
-			}
+		HttpSession session = request.getSession();
+		User user = (User)session.getAttribute("user");
+		String buyPorductIdString = request.getParameter("productId");
+		session.setAttribute("buyproductSate",buyPorductIdString );
+		if (user!=null) {
+			//跳转到生成订单的界面
+			request.getRequestDispatcher("pages/order_detail.jsp").forward(request, response);
+			
+			
+			
+		}else {
+			//跳转到  注册登录的界面
+			request.getRequestDispatcher("pages/login.jsp").forward(request, response);
 		}
-	
 	}
 
 	/**
